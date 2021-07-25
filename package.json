@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js",
-    "production": "NODE_ENV=production node server.js"
+    "production": "NODE_ENV=production node server.js",
+    "data:import": "node seeder",
+    "data:destroy": "node seeder -d"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
