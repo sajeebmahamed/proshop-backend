@@ -34,7 +34,6 @@ const registerUser = asyncHandler(async (req, res) => {
          isAdmin: user.isAdmin,
          token: generateToken(user._id),
       });
-      console.log(user);
    } else {
       res.status(400);
       throw new Error("Invalid user data");
