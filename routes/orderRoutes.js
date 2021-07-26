@@ -1,7 +1,10 @@
 // external imports
 const express = require("express");
 // internal imports
-const { addOrderItems } = require("../controllers/orderController");
+const {
+   addOrderItems,
+   getOrderById,
+} = require("../controllers/orderController");
 
 const { protect } = require("../middleware/authMiddleware");
 
@@ -9,5 +12,6 @@ const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.route("/").post(protect, addOrderItems);
+router.route("/:id").get(protect, getOrderById);
 
 module.exports = router;
