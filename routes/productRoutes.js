@@ -1,15 +1,24 @@
-// external imports 
-const express = require('express')
+// external imports
+const express = require("express");
 // internal imports
-const { getProducts, getProductById } = require('../controllers/productController')
+const {
+   getProducts,
+   getProductById,
+   deleteProduct,
+   createProduct,
+   updateProduct,
+} = require("../controllers/productController");
+const { protect, admin } = require("../middleware/authMiddleware");
 
-// router instance 
-const router = express.Router()
+// router instance
+const router = express.Router();
 
+router.route("/").get(getProducts).post(protect, admin, createProduct);
 
-router.get('/', getProducts)
+router
+   .route("/:id")
+   .get(getProductById)
+   .delete(protect, admin, deleteProduct)
+   .put(protect, admin, updateProduct);
 
-
-router.get('/:id', getProductById)
-
-module.exports = router
+module.exports = router;
