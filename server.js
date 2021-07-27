@@ -29,7 +29,7 @@ app.use(express.json());
 
 // routing setup
 app.use("/api/products", productRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 
 // 404 not found handler
