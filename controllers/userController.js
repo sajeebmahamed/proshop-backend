@@ -1,9 +1,12 @@
 // external imports
 const asyncHandler = require("express-async-handler");
-
+const { getWelcomeMailTemplate } = require("../email/templates");
+const nodemailer = require("nodemailer");
 // internal imports
 const User = require("../models/userModel");
+const sms = require("../sms");
 const generateToken = require("../utils/generateToken");
+const transporter = require("../email/transporter");
 
 /**
  * @desc Register new user
@@ -27,6 +30,24 @@ const registerUser = asyncHandler(async (req, res) => {
    });
 
    if (user) {
+      // setup email data with unicode symbols
+      let mailOptions = {
+         from: '"Proshop" <sajeebmahamed@email.com>',
+         to: user.email,
+         subject: "Registration successfull",
+         html: getWelcomeMailTemplate(user),
+      };
+
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+         if (error) {
+            return console.log(error);
+         }
+         console.log("Message sent: %s", info.messageId);
+         console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+         console.log(info);
+      });
+
       res.status(201).json({
          _id: user._id,
          name: user.name,
